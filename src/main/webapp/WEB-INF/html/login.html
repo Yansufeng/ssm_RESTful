@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+		<title>登陆</title>
+
+		<link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="../css/login.css">
+		<script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+	</head>
+
+	<body>
+
+		<div class="container">
+			<form class="form-signin">
+				<h2 class="form-signin-heading">用户登陆</h2>
+				<label for="inputName" class="sr-only">用户名</label>
+				<input type="text" id="inputName" class="form-control" placeholder="用户名" required autofocus>
+				<label for="inputPwd" class="sr-only">密码</label>
+				<input type="password" id="inputPwd" class="form-control" placeholder="密码" required>
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" value="remember-me"> 记住状态
+					</label>
+				</div>
+				<div class="regist">
+					<a href="">注册</a>
+				</div>
+				<button class="btn btn-lg btn-success btn-block" id="btn_login" type="submit">登陆</button>
+			</form>
+
+		</div>
+
+		<script type="text/javascript">
+			$("#btn_login").click(function () {
+				var Data={
+					name:$("#inputName").val(),
+					pwd:$("#inputPwd").val(),
+				};
+		        $.ajax({
+		            url:"/user/login_check",
+		            type:"POST",
+		            dataType:"json",
+                    contentType:"application/json",
+		            data:JSON.stringify(Data),
+		            success:function(res) {
+		                console.log(res);
+		                console.log("success");
+		                if(res.flag){
+		                	var msg="登陆成功！\n后台返回的个人信息："+res.msg;
+		                	alert(msg);
+		                	window.location.reload;
+		                }else{
+		                	alert("账号密码不匹配！");
+		                	window.location.reload;
+		                }
+		            },
+		            error:function(result){
+		                console.log(result);
+		                console.log("failed");
+		            }
+		        });
+		    });				
+		</script>
+	</body>
+</html>

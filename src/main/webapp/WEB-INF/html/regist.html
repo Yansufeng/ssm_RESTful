@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+		<title>注册</title>
+
+		<link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="../css/regist.css">
+		<script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+	</head>
+
+	<body>
+
+		<div class="container">
+			<form class="form-signin">
+				<h2 class="form-signin-heading">用户注册</h2>
+				<label for="inputName" class="sr-only">用户名</label>
+				<input type="text" id="inputName" class="form-control" placeholder="用户名" required autofocus>
+
+				<label for="inputPwd" class="sr-only">密码</label>
+				<input type="password" id="inputPwd" class="form-control" placeholder="密码" required>
+
+				<label for="inputMsg" class="sr-only">个人信息</label>
+				<input type="text" id="inputMsg" class="form-control" placeholder="个人信息" required>
+
+				<label for="inputSex" class="control-label" style="font-size: 20px;margin-left: 10px;">性别</label>
+				<ul class="checkbox">
+					<li class="mars">
+						<input type="radio" name="sex" value=1>
+						男生
+					</li>
+					<li class="venus">	
+						<input type="radio" name="sex" value="2">
+						女生
+				    </li>
+				</ul>
+
+				<button class="btn btn-lg btn-success btn-block" id="btn_login" type="button">注册</button>
+			</form>
+
+		</div>
+
+		<script type="text/javascript">
+			$("#btn_login").click(function () {
+				var Data={
+					name:$("#inputName").val(),
+					pwd:$("#inputPwd").val(),
+					info:$("#inputMsg").val(),
+					sex:$("input[type='radio']:checked").val(),
+				};
+		        $.ajax({
+		            url:"/user/regist_input",
+		            type:"POST",
+		            dataType:"json",
+                    contentType:"application/json",
+		            data:JSON.stringify(Data),
+		            success:function(res) {
+		                console.log(res);
+		                console.log("success");
+		                alert("注册成功！\n请返回登录页登陆");
+		                window.location.href="/user/index";
+		            },
+		            error:function(result){
+		                console.log(result);
+		                console.log("failed");
+		                alert("注册失败！");
+		                window.location.reload();
+		            }
+		        });
+		    });				
+		</script>
+	</body>
+</html>
